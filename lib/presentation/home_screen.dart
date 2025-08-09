@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../style/colors/app_colors.dart';
-import 'movie_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final String username;
+
+  const HomeScreen({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -18,129 +19,51 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: AppColors.primaryYellow,
+                color: AppColors.darkGray,
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Hello,",
-                              style: TextStyle(
-                                fontSize: 28,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: "Hello, ",
+                              style: const TextStyle(
+                                fontSize: 20,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.white,
                               ),
-                            ),
-                            Text(
-                              "good Morning",
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Icon(
-                                  Icons.notifications_outlined,
-                                  color: Colors.grey[600],
-                                  size: 24,
-                                ),
-                              ),
-                              Positioned(
-                                top: 12,
-                                right: 12,
-                                child: Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 16),
-                          Icon(Icons.search, color: Colors.grey[400], size: 24),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: "Search",
-                                hintStyle: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 16,
-                                ),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Row(
                               children: [
-                                Text(
-                                  "All",
+                                TextSpan(
+                                  text: username,
                                   style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 16,
+                                    color: AppColors.primaryOrange,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Colors.grey[600],
-                                  size: 20,
                                 ),
                               ],
                             ),
                           ),
+                          Text(
+                            "good Morning",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -152,72 +75,17 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 16),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Explore categories",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
+                  // Your content here
+                  Center(
+                    child: Text(
+                      'Welcome to the Movie App!',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.darkGray,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => MovieDetailScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "See all",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-
-                  const SizedBox(height: 12),
-
-                  // Expanded(
-                  //   child: ListView.builder(
-                  //     padding: EdgeInsets.zero,
-                  //     itemCount: (categoryList.length / 2).ceil(),
-                  //     itemBuilder: (context, rowIndex) {
-                  //       return Padding(
-                  //         padding: const EdgeInsets.only(bottom: 12),
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: _buildCategoryCard(
-                  //                 categoryList[rowIndex * 2],
-                  //                 context,
-                  //               ),
-                  //             ),
-                  //
-                  //             const SizedBox(width: 12),
-                  //
-                  //             Expanded(
-                  //               child: (rowIndex * 2 + 1) < categoryList.length
-                  //                   ? _buildCategoryCard(
-                  //                       categoryList[rowIndex * 2 + 1],
-                  //                       context,
-                  //                     )
-                  //                   : SizedBox(),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
             ),

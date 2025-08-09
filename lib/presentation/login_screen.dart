@@ -1,10 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:task_3/presentation/home_screen.dart';
 import 'package:task_3/presentation/register_screen.dart';
 
 import '../style/colors/app_colors.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // Controllers untuk handle data input
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // State untuk password visibility
+  bool _isPasswordVisible = false;
+
+  @override
+  void dispose() {
+    // Dispose controllers untuk prevent memory leaks
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _handleLogin() {
+    String username = _usernameController.text.trim();
+    String password = _passwordController.text.trim();
+
+    // Simple validation
+    if (username.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill all fields'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // ✅ Default kredensial validation
+    const String defaultUsername = 'adminAdmin';
+    const String defaultPassword = 'Admin123!';
+
+    if (username != defaultUsername || password != defaultPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Invalid credentials!'),
+              SizedBox(height: 4),
+              Text(
+                'Default: adminAdmin / Admin123!',
+                style: TextStyle(fontSize: 12, color: Colors.white70),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return;
+    }
+
+    // Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Login successful!'),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 1),
+      ),
+    );
+
+    // Navigate ke HomeScreen dengan passing username
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen(username: username)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,19 +144,28 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: 32),
 
                       _buildLabel("Username"),
-                      _buildTextField(hintText: "panitia17an"),
+                      _buildTextField(
+                        controller: _usernameController,
+                        hintText: "panitia17an",
+                      ),
 
                       const SizedBox(height: 20),
 
                       _buildLabel("Password"),
                       _buildTextField(
+                        controller: _passwordController,
                         hintText: "••••••••••••••",
                         isPassword: true,
                         suffixIcon: IconButton(
                           onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
                           },
-                          icon: const Icon(
-                            Icons.visibility_off,
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                             color: AppColors.primaryOrange,
                             size: 20,
                           ),
@@ -105,14 +192,8 @@ class LoginScreen extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => RegisterScreen(),
-                              ),
-                            );
-                          },
+                          onPressed: _handleLogin,
+                          // ✅ Handle login dengan state
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryOrange,
                             foregroundColor: Colors.white,
@@ -193,6 +274,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildTextField({
+    required TextEditingController controller,
     required String hintText,
     bool isPassword = false,
     Widget? suffixIcon,
@@ -206,7 +288,8 @@ class LoginScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
-        obscureText: isPassword,
+        controller: controller,
+        obscureText: isPassword ? !_isPasswordVisible : false,
         keyboardType: keyboardType,
         readOnly: readOnly,
         onTap: onTap,

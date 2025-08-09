@@ -3,8 +3,77 @@ import 'package:flutter/material.dart';
 import '../style/colors/app_colors.dart';
 import 'home_screen.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  // Controllers untuk handle data input
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // State untuk password visibility
+  bool _isPasswordVisible = false;
+
+  @override
+  void dispose() {
+    // Dispose controllers untuk prevent memory leaks
+    _fullNameController.dispose();
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _handleRegister() {
+    String fullName = _fullNameController.text.trim();
+    String username = _usernameController.text.trim();
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    // Simple validation
+    if (fullName.isEmpty || username.isEmpty || email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill all fields'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // Basic email validation
+    if (!email.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid email'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Account created successfully!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    // Navigate ke HomeScreen dengan passing username
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(username: username),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +116,24 @@ class RegisterScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildLabel("Full name"),
-                    _buildTextField(hintText: "Enter your full name"),
+                    _buildTextField(
+                      controller: _fullNameController,
+                      hintText: "Enter your full name",
+                    ),
 
                     const SizedBox(height: 20),
 
                     _buildLabel("User name"),
-                    _buildTextField(hintText: "Enter your user name"),
+                    _buildTextField(
+                      controller: _usernameController,
+                      hintText: "Enter your user name",
+                    ),
 
                     const SizedBox(height: 20),
 
                     _buildLabel("Email"),
                     _buildTextField(
+                      controller: _emailController,
                       hintText: "example@example.com",
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -66,14 +142,19 @@ class RegisterScreen extends StatelessWidget {
 
                     _buildLabel("Password"),
                     _buildTextField(
+                      controller: _passwordController,
                       hintText: "••••••••••••••",
                       isPassword: true,
                       suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Image.asset(
-                          "image/ic_eye_red.png",
-                          width: 20,
-                          height: 20,
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                        icon: Icon(
+                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: AppColors.primaryOrange,
+                          size: 20,
                         ),
                       ),
                     ),
@@ -119,12 +200,7 @@ class RegisterScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => HomeScreen()),
-                          );
-                        },
+                        onPressed: _handleRegister, // ✅ Handle register dengan state
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryOrange,
                           foregroundColor: Colors.white,
@@ -141,15 +217,6 @@ class RegisterScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    const Center(
-                      child: Text(
-                        "or sign up with",
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
                       ),
                     ),
 
@@ -206,6 +273,7 @@ class RegisterScreen extends StatelessWidget {
   }
 
   Widget _buildTextField({
+    required TextEditingController controller,
     required String hintText,
     bool isPassword = false,
     Widget? suffixIcon,
@@ -219,7 +287,8 @@ class RegisterScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
-        obscureText: isPassword,
+        controller: controller, // ✅ Added controller
+        obscureText: isPassword ? !_isPasswordVisible : false, // ✅ Dynamic password visibility
         keyboardType: keyboardType,
         readOnly: readOnly,
         onTap: onTap,
@@ -228,62 +297,6 @@ class RegisterScreen extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey[600], fontSize: 16),
           suffixIcon: suffixIcon,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: AppColors.primaryOrange, width: 2),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
-          ),
-          filled: true,
-          fillColor: AppColors.creamButton,
-        ),
-      ),
-    );
-  }
-}
-
-class PasswordField extends StatefulWidget {
-  final String hintText;
-  final String? Function(String?)? validator;
-
-  const PasswordField({Key? key, required this.hintText, this.validator})
-    : super(key: key);
-
-  @override
-  State<PasswordField> createState() => _PasswordFieldState();
-}
-
-class _PasswordFieldState extends State<PasswordField> {
-  bool _isVisible = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.creamButton,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: TextFormField(
-        obscureText: !_isVisible,
-        validator: widget.validator,
-        style: const TextStyle(fontSize: 16, color: Colors.black87),
-        decoration: InputDecoration(
-          hintText: widget.hintText,
-          hintStyle: TextStyle(color: Colors.grey[600], fontSize: 16),
-          suffixIcon: IconButton(
-            onPressed: () => setState(() => _isVisible = !_isVisible),
-            icon: Icon(
-              _isVisible ? Icons.visibility : Icons.visibility_off,
-              color: AppColors.primaryOrange,
-              size: 20,
-            ),
-          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
