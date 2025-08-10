@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           username: ModalRoute.of(context)?.settings.arguments as String,
         ),
         NavigationRoute.detailRoute.name: (context) => MovieDetailScreen(
-          movies: ModalRoute.of(context)?.settings.arguments as MovieModel,
+          movie: ModalRoute.of(context)?.settings.arguments as MovieModel,
         ),
       },
     );

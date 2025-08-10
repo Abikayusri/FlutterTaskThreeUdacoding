@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_3/presentation/register/register_screen.dart';
 
 import '../../static/navigation_route.dart';
 import '../../style/colors/app_colors.dart';
@@ -12,16 +11,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // Controllers untuk handle data input
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // State untuk password visibility
   bool _isPasswordVisible = false;
 
   @override
   void dispose() {
-    // Dispose controllers untuk prevent memory leaks
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -31,20 +27,18 @@ class _LoginScreenState extends State<LoginScreen> {
     String username = _usernameController.text.trim();
     String password = _passwordController.text.trim();
 
-    // Simple validation
     if (username.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please fill all fields'),
+          content: Text("Please fill all fields"),
           backgroundColor: Colors.red,
         ),
       );
       return;
     }
 
-    // ✅ Default kredensial validation
-    const String defaultUsername = 'adminAdmin';
-    const String defaultPassword = 'Admin123!';
+    const String defaultUsername = "adminAdmin";
+    const String defaultPassword = "Admin123!";
 
     if (username != defaultUsername || password != defaultPassword) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -53,10 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Invalid credentials!'),
+              Text("Invalid credentials!"),
               SizedBox(height: 4),
               Text(
-                'Default: adminAdmin / Admin123!',
+                "Default: adminAdmin / Admin123!",
                 style: TextStyle(fontSize: 12, color: Colors.white70),
               ),
             ],
@@ -68,10 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    // Show success message
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Login successful!'),
+        content: Text("Login successful!"),
         backgroundColor: Colors.green,
         duration: Duration(seconds: 1),
       ),
@@ -146,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildLabel("Username"),
                       _buildTextField(
                         controller: _usernameController,
-                        hintText: "panitia17an",
+                        hintText: "Enter your user name",
                       ),
 
                       const SizedBox(height: 20),
@@ -172,28 +165,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 16),
-
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          "Forgot Password",
-                          style: TextStyle(
-                            color: AppColors.primaryOrange,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 82),
 
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: _handleLogin,
-                          // ✅ Handle login dengan state
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryOrange,
                             foregroundColor: Colors.white,

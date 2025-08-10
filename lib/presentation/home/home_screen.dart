@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                                 TextSpan(
                                   text: username,
                                   style: TextStyle(
-                                    color: AppColors.creamButton,
+                                    color: Colors.orangeAccent,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
 
                 Center(
                   child: Text(
-                    'Welcome to the Movie App!',
+                    "Welcome to the Movie App!",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -90,6 +90,8 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+
+          SizedBox(height: 16),
 
           Expanded(
             child: ListView.builder(
@@ -110,6 +112,8 @@ class HomeScreen extends StatelessWidget {
               },
             ),
           ),
+
+          SizedBox(height: 24),
         ],
       ),
     );

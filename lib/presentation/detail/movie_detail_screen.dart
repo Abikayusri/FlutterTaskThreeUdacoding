@@ -2,199 +2,201 @@ import 'package:flutter/material.dart';
 import 'package:task_3/model/movie_list.dart';
 
 import '../../style/colors/app_colors.dart';
+import '../../utils/date_helper.dart';
 
 class MovieDetailScreen extends StatelessWidget {
-  final MovieModel movies;
+  final MovieModel movie;
 
-  const MovieDetailScreen({super.key, required this.movies});
+  const MovieDetailScreen({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back, color: Colors.black, size: 24),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search, color: Colors.black, size: 24),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+      backgroundColor: AppColors.darkGray,
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      "image/users/ic_users1.jpg",
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.grey[300],
-                          ),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.grey[600],
-                            size: 30,
-                          ),
-                        );
-                      },
+            SizedBox(
+              width: double.infinity,
+              height: 250,
+              child: Image.asset(
+                movie.backdropPath ?? "assets/images/placeholder.jpg",
+                width: double.infinity,
+                height: 250,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: double.infinity,
+                    height: 250,
+                    color: Colors.grey[800],
+                    child: const Icon(
+                      Icons.movie,
+                      color: Colors.grey,
+                      size: 60,
                     ),
-                  ),
-                ),
-
-                const SizedBox(width: 16),
-
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Lucas Wilson",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "Thomas Jefferson High School",
-                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryYellow,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Icon(Icons.sync, color: Colors.white, size: 20),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            Divider(),
-
-            const SizedBox(height: 16),
-
-            Text(
-              "Staff available for Lucas Wilson",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.blue,
+                  );
+                },
               ),
             ),
 
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
-            Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            movie.posterPath ?? "assets/images/placeholder.jpg",
+                            width: 120,
+                            height: 170,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                width: 80,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Icon(
+                                  Icons.movie,
+                                  color: Colors.grey,
+                                  size: 40,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
 
-            const SizedBox(height: 16),
-            // Expanded(
-            // child: ListView.separated(
-            //   itemCount: staffList.length,
-            //   separatorBuilder: (context, index) =>
-            //       Divider(color: Colors.grey[200], height: 1),
-            //   itemBuilder: (context, index) {
-            //     return _buildStaffItem(staffList[index]);
-            //   },
-            // ),
-            // ),
+                      const SizedBox(width: 16),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              movie.title ?? "Unknown Title",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.calendar_today,
+                                  size: 14,
+                                  color: Colors.grey[600],
+                                ),
+
+                                const SizedBox(width: 4),
+
+                                Text(
+                                  DateHelper.formatDate(movie.releaseDate),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 6),
+
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 14,
+                                  color: Colors.amber[600],
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  (movie.voteAverage ?? 0.0).toStringAsFixed(1),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 6),
+
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.trending_up,
+                                  size: 14,
+                                  color: Colors.green[400],
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  movie.popularity.toString(),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.green[400],
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 16),
+
+                  Divider(color: Colors.grey[600], thickness: 1),
+
+                  SizedBox(height: 16),
+
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Overview",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 16),
+
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      movie.overview ?? "No description available",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.white,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-
-  // Widget _buildStaffItem(UsersModel staff) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 16),
-  //     child: Row(
-  //       children: [
-  //         SizedBox(
-  //           width: 50,
-  //           height: 50,
-  //           child: ClipRRect(
-  //             borderRadius: BorderRadius.circular(25),
-  //             child: Image.asset(
-  //               staff.profileImage,
-  //               fit: BoxFit.cover,
-  //               errorBuilder: (context, error, stackTrace) {
-  //                 return Container(
-  //                   decoration: BoxDecoration(
-  //                     borderRadius: BorderRadius.circular(25),
-  //                     color: Colors.grey[300],
-  //                   ),
-  //                   child: Icon(
-  //                     Icons.person,
-  //                     color: Colors.grey[600],
-  //                     size: 24,
-  //                   ),
-  //                 );
-  //               },
-  //             ),
-  //           ),
-  //         ),
-  //
-  //         const SizedBox(width: 16),
-  //
-  //         Expanded(
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               Text(
-  //                 staff.name,
-  //                 style: TextStyle(
-  //                   fontSize: 16,
-  //                   fontWeight: FontWeight.w600,
-  //                   color: Colors.black,
-  //                 ),
-  //               ),
-  //               const SizedBox(height: 4),
-  //               Text(
-  //                 staff.role,
-  //                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //
-  //         GestureDetector(
-  //           child: Container(
-  //             width: 40,
-  //             height: 40,
-  //             decoration: BoxDecoration(
-  //               color: Colors.blue[50],
-  //               borderRadius: BorderRadius.circular(20),
-  //             ),
-  //             child: Icon(Icons.phone, color: Colors.blue, size: 20),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

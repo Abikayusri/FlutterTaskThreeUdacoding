@@ -7,7 +7,6 @@ String movieModelToJson(MovieModel data) => json.encode(data.toJson());
 
 class MovieModel {
   final String? backdropPath;
-  final int? id;
   final String? overview;
   final double? popularity;
   final String? posterPath;
@@ -17,7 +16,6 @@ class MovieModel {
 
   MovieModel({
     this.backdropPath,
-    this.id,
     this.overview,
     this.popularity,
     this.posterPath,
@@ -28,7 +26,6 @@ class MovieModel {
 
   factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
     backdropPath: json["backdrop_path"],
-    id: json["id"],
     overview: json["overview"],
     popularity: json["popularity"]?.toDouble(),
     posterPath: json["poster_path"],
@@ -41,7 +38,6 @@ class MovieModel {
 
   Map<String, dynamic> toJson() => {
     "backdrop_path": backdropPath,
-    "id": id,
     "overview": overview,
     "popularity": popularity,
     "poster_path": posterPath,
@@ -55,7 +51,6 @@ class MovieModel {
 final List movieList = [
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop1.jpg",
-    id: 755898,
     overview:
         "Will Radford is a top analyst for Homeland Security who tracks potential threats through a mass surveillance program, until one day an attack by an unknown entity leads him to question whether the government is hiding something from him... and from the rest of the world.",
     popularity: 1951.6717,
@@ -66,7 +61,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop2.jpg",
-    id: 1234821,
     overview:
         "Five years after the events of Jurassic World Dominion, covert operations expert Zora Bennett is contracted to lead a skilled team on a top-secret mission to secure genetic material from the world's three most massive dinosaurs. When Zora's operation intersects with a civilian family whose boating expedition was capsized, they all find themselves stranded on an island where they come face-to-face with a sinister, shocking discovery that's been hidden from the world for decades.",
     popularity: 1236.3748,
@@ -77,7 +71,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop3.jpg",
-    id: 986206,
     overview:
         "A blogger who is also a werewolf meets a dashing playboy with a dark secret of his own. Starring Logan Andrews and Christian Howard.",
     popularity: 421.3215,
@@ -88,7 +81,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop4.jpg",
-    id: 1106289,
     overview:
         "A routine cash pickup takes a wild turn when mismatched armored truck drivers Russell and Travis are ambushed by ruthless criminals led by savvy mastermind Zoe.",
     popularity: 477.8545,
@@ -99,7 +91,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop5.jpg",
-    id: 1155281,
     overview:
         "Taishi Wen Zhong led the army of Shang Dynasty including Deng Chanyu and four generals of the Mo Family to Xiqi. With the help of Kunlun immortals such as Jiang Ziya, Ji Fa led the army and civilians of Xiqi to defend their homeland.",
     popularity: 471.5759,
@@ -110,7 +101,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop6.jpg",
-    id: 1087192,
     overview:
         "On the rugged isle of Berk, where Vikings and dragons have been bitter enemies for generations, Hiccup stands apart, defying centuries of tradition when he befriends Toothless, a feared Night Fury dragon. Their unlikely bond reveals the true nature of dragons, challenging the very foundations of Viking society.",
     popularity: 396.9524,
@@ -121,7 +111,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop7.jpg",
-    id: 1311031,
     overview:
         "As the Demon Slayer Corps members and Hashira engaged in a group strength training program, the Hashira Training, in preparation for the forthcoming battle against the demons, Muzan Kibutsuji appears at the Ubuyashiki Mansion. With the head of the Demon Corps in danger, Tanjiro and the Hashira rush to the headquarters but are plunged into a deep descent to a mysterious space by the hands of Muzan Kibutsuji. The destination of where Tanjiro and Demon Slayer Corps have fallen is the demons' stronghold – the Infinity Castle. And so, the battleground is set as the final battle between the Demon Slayer Corps and the demons ignites.",
     popularity: 342.7101,
@@ -132,7 +121,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop8.jpg",
-    id: 1100988,
     overview:
         "Twenty-eight years since the rage virus escaped a biological weapons laboratory, now, still in a ruthlessly enforced quarantine, some have found ways to exist amidst the infected. One such group lives on a small island connected to the mainland by a single, heavily-defended causeway. When one member departs on a mission into the dark heart of the mainland, he discovers secrets, wonders, and horrors that have mutated not only the infected but other survivors as well.",
     popularity: 266.1237,
@@ -143,7 +131,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop9.jpg",
-    id: 980477,
     overview:
         "After a catastrophic event leaves their bodies destroyed, Ne Zha and Ao Bing are granted a fragile second chance at life. As tensions rise between the dragon clans and celestial forces, the two must undergo a series of perilous trials that will test their bond, challenge their identities, and decide the fate of both mortals and immortals.",
     popularity: 284.5355,
@@ -154,7 +141,6 @@ final List movieList = [
   ),
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop10.jpg",
-    id: 552524,
     overview:
         "The wildly funny and touching story of a lonely Hawaiian girl and the fugitive alien who helps to mend her broken family.",
     popularity: 239.6152,

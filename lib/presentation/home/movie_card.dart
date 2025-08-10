@@ -31,11 +31,10 @@ class MovieCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Movie Poster
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
-                movie.posterPath ?? 'assets/images/placeholder.jpg',
+                movie.posterPath ?? "assets/images/placeholder.jpg",
                 width: 80,
                 height: 120,
                 fit: BoxFit.cover,
@@ -58,14 +57,12 @@ class MovieCard extends StatelessWidget {
             ),
             const SizedBox(width: 12),
 
-            // Movie Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Movie Title
                   Text(
-                    movie.title ?? 'Unknown Title',
+                    movie.title ?? "Unknown Title",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -76,7 +73,6 @@ class MovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
 
-                  // Release Date
                   Row(
                     children: [
                       Icon(
@@ -97,7 +93,6 @@ class MovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
 
-                  // Rating
                   Row(
                     children: [
                       Icon(Icons.star, size: 14, color: Colors.amber[600]),
@@ -114,9 +109,8 @@ class MovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
 
-                  // Overview (max 3 lines)
                   Text(
-                    movie.overview ?? 'No description available',
+                    movie.overview ?? "No description available",
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.grey[600],
@@ -129,7 +123,6 @@ class MovieCard extends StatelessWidget {
               ),
             ),
 
-            // Arrow Icon
             Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey[400]),
           ],
         ),
