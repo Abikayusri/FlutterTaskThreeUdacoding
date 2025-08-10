@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:task_3/model/movie_list.dart';
 
-import '../style/colors/app_colors.dart';
+import '../../style/colors/app_colors.dart';
 
 class MovieDetailScreen extends StatelessWidget {
-  const MovieDetailScreen({super.key});
+  final MovieModel movies;
+
+  const MovieDetailScreen({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {

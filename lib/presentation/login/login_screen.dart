@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task_3/presentation/home_screen.dart';
-import 'package:task_3/presentation/register_screen.dart';
+import 'package:task_3/presentation/register/register_screen.dart';
 
-import '../style/colors/app_colors.dart';
+import '../../static/navigation_route.dart';
+import '../../style/colors/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -77,10 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
-    // Navigate ke HomeScreen dengan passing username
-    Navigator.pushReplacement(
+    Navigator.pushReplacementNamed(
       context,
-      MaterialPageRoute(builder: (context) => HomeScreen(username: username)),
+      NavigationRoute.homeRoute.name,
+      arguments: username,
     );
   }
 
@@ -218,11 +218,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       Center(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                            Navigator.pushNamed(
                               context,
-                              MaterialPageRoute(
-                                builder: (_) => RegisterScreen(),
-                              ),
+                              NavigationRoute.registerRoute.name,
                             );
                           },
                           child: RichText(

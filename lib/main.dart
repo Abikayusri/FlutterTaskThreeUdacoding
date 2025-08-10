@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:task_3/presentation/login_screen.dart';
+
+import 'model/movie_list.dart';
+import 'presentation/detail/movie_detail_screen.dart';
+import 'presentation/home/home_screen.dart';
+import 'presentation/login/login_screen.dart';
+import 'presentation/register/register_screen.dart';
+import 'static/navigation_route.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +25,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginScreen(),
+      initialRoute: NavigationRoute.loginRoute.name,
+      routes: {
+        NavigationRoute.loginRoute.name: (context) => const LoginScreen(),
+        NavigationRoute.registerRoute.name: (context) => const RegisterScreen(),
+        NavigationRoute.homeRoute.name: (context) => HomeScreen(
+          username: ModalRoute.of(context)?.settings.arguments as String,
+        ),
+        NavigationRoute.detailRoute.name: (context) => MovieDetailScreen(
+          movies: ModalRoute.of(context)?.settings.arguments as MovieModel,
+        ),
+      },
     );
   }
 }

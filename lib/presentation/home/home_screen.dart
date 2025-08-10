@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:task_3/model/movie_list.dart';
+import 'package:task_3/presentation/home/movie_card.dart';
 
-import '../style/colors/app_colors.dart';
+import '../../static/navigation_route.dart';
+import '../../style/colors/app_colors.dart';
 
 class HomeScreen extends StatelessWidget {
   final String username;
@@ -10,7 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.darkGray,
       body: Column(
         children: [
           Padding(
@@ -19,7 +22,7 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: AppColors.darkGray,
+                color: AppColors.primaryOrange,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Column(
@@ -43,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                                 TextSpan(
                                   text: username,
                                   style: TextStyle(
-                                    color: AppColors.primaryOrange,
+                                    color: AppColors.creamButton,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -68,26 +71,43 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
 
-                  // Your content here
-                  Center(
-                    child: Text(
-                      'Welcome to the Movie App!',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.darkGray,
-                      ),
+                Center(
+                  child: Text(
+                    'Welcome to the Movie App!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryOrange,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
+          ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: movieList.length,
+              itemBuilder: (context, index) {
+                final movie = movieList[index];
+
+                return MovieCard(
+                  movie: movie,
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      NavigationRoute.detailRoute.name,
+                      arguments: movie,
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:task_3/static/navigation_route.dart';
 
-import '../style/colors/app_colors.dart';
-import 'home_screen.dart';
+import '../../style/colors/app_colors.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -37,7 +37,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String password = _passwordController.text.trim();
 
     // Simple validation
-    if (fullName.isEmpty || username.isEmpty || email.isEmpty || password.isEmpty) {
+    if (fullName.isEmpty ||
+        username.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Please fill all fields'),
@@ -66,12 +69,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
-    // Navigate ke HomeScreen dengan passing username
-    Navigator.pushReplacement(
+    Navigator.pushReplacementNamed(
       context,
-      MaterialPageRoute(
-        builder: (context) => HomeScreen(username: username),
-      ),
+      NavigationRoute.homeRoute.name,
+      arguments: username,
     );
   }
 
@@ -152,7 +153,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           });
                         },
                         icon: Icon(
-                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                           color: AppColors.primaryOrange,
                           size: 20,
                         ),
@@ -200,7 +203,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: _handleRegister, // ✅ Handle register dengan state
+                        onPressed: _handleRegister,
+                        // ✅ Handle register dengan state
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryOrange,
                           foregroundColor: Colors.white,
@@ -287,8 +291,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
-        controller: controller, // ✅ Added controller
-        obscureText: isPassword ? !_isPasswordVisible : false, // ✅ Dynamic password visibility
+        controller: controller,
+        // ✅ Added controller
+        obscureText: isPassword ? !_isPasswordVisible : false,
+        // ✅ Dynamic password visibility
         keyboardType: keyboardType,
         readOnly: readOnly,
         onTap: onTap,
