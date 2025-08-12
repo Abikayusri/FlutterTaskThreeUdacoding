@@ -48,7 +48,7 @@ class MovieModel {
   };
 }
 
-final List movieList = [
+final List<MovieModel> movieList = [
   MovieModel(
     backdropPath: "assets/images/backdrop/ic_backdrop1.jpg",
     overview:
